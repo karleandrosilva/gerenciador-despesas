@@ -5,8 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController // web service REST
@@ -52,6 +55,42 @@ public class DespesaController {
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Se não existir a despesa, apresentará um erro (404)
+    }
+
+    // ATUALIZAR UMA DESPESA - (PUT)
+    @PutMapping("/{id}")
+    public ResponseEntity<Despesa> atualizar(@PathVariable Long id, @RequestBody Despesa despesaAtualizada) {
+        // Procura pela despesa com o ID informado
+        for (Despesa despesa : despesas) {
+            if (despesa.getId().equals(id)) {
+                // Atualiza os campos da despesa existente
+                despesa.setDescricao(despesaAtualizada.getDescricao());
+                despesa.setValor(despesaAtualizada.getValor());
+                despesa.setCategoria(despesaAtualizada.getCategoria());
+                despesa.setMesReferencia(despesaAtualizada.getMesReferencia());
+
+                return new ResponseEntity<>(despesa, HttpStatus.OK); // Retorna a despesa atualizada com status 200
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Se não encontrar, retorna 404
+    }
+
+    // LISTAR TOTAL DE DESPESAS - (GET)
+    @GetMapping("/total")
+    public ResponseEntity<Map<String, Object>> obterTotal() {
+        // Calcula o total de todas as despesas
+        BigDecimal total = despesas.stream()
+                .map(Despesa::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // Cria um mapa com o total e a quantidade de despesas
+        Map<String, Object> resultado = new HashMap<>();
+        resultado.put("totalGasto", total);
+        resultado.put("quantidadeDespesas", despesas.size());
+        resultado.put("despesas", despesas);
+
+        return new ResponseEntity<>(resultado, HttpStatus.OK);
     }
 
 }
