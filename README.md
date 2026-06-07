@@ -32,6 +32,12 @@ O servidor será iniciado na porta **8080**.
 
 Como a aplicação é uma API RESTful, ela não possui uma interface gráfica nativa (páginas HTML/CSS na raiz). Para demonstrar **como um cliente non-browser chamaria o web service**, utilizamos a ferramenta **Postman** (podendo também ser utilizado o Thunder Client ou Insomnia) para enviar as requisições HTTP e simular a comunicação entre a API e um front-end/mobile.
 
+### 🌐 Acesso Rápido: Workspace do Postman 
+Para facilitar a avaliação, todas as requisições descritas abaixo foram previamente configuradas em uma Collection pública no Postman. 
+Com o projeto rodando localmente na sua máquina, basta acessar o link abaixo para visualizar a documentação e disparar as requisições com um clique:
+
+👉 **[Acessar Collection do Postman para Testes](https://karleandrosilva-aa26cb43-3010106.postman.co/workspace/Karle's-Workspace~90810eb5-54e2-425c-80b4-98606dbf5063/request/53367202-86ffe660-a8a6-40a1-8ffc-3ea0d40b27a7?action=share&creator=53367202&ctx=documentation)**
+
 Abaixo estão as requisições mapeadas e testadas:
 
 ### 1. Cadastrar uma Despesa (Ação: CREATE)
@@ -45,7 +51,7 @@ Para criar um registro, o cliente envia uma requisição `POST` contendo os dado
     "descricao": "Almoço no RU",
     "valor": 15.50,
     "categoria": "Alimentação",
-    "mesReferencia": "Junho"
+    "mesReferencia": "06/2026"
   }
   ```
 * **Comportamento Esperado:** A API recebe o JSON, converte em um objeto `Despesa`, gera um ID sequencial automaticamente e retorna o objeto criado com o **Status HTTP 201 (Created)**.
@@ -64,7 +70,7 @@ Para visualizar as despesas cadastradas, o cliente envia uma requisição `GET` 
       "descricao": "Almoço no RU",
       "valor": 15.50,
       "categoria": "Alimentação",
-      "mesReferencia": "Junho"
+      "mesReferencia": "06/2026"
     }
   ]
   ```
@@ -88,7 +94,7 @@ Para atualizar um registro existente, o cliente envia uma requisição `PUT` com
     "descricao": "Almoço no restaurante",
     "valor": 25.80,
     "categoria": "Alimentação",
-    "mesReferencia": "Junho"
+    "mesReferencia": "06/2026"
   }
   ```
 * **Comportamento Esperado:** A API localiza o ID, atualiza os campos da despesa e retorna o objeto atualizado com **Status HTTP 200 (OK)**. Caso o ID não exista, retorna **Status HTTP 404 (Not Found)**.
@@ -110,14 +116,14 @@ Para visualizar o total gasto e a quantidade de despesas, o cliente envia uma re
         "descricao": "Almoço no RU",
         "valor": 15.50,
         "categoria": "Alimentação",
-        "mesReferencia": "Junho"
+        "mesReferencia": "06/2026"
       },
       {
         "id": 2,
         "descricao": "Almoço no restaurante",
         "valor": 25.80,
         "categoria": "Alimentação",
-        "mesReferencia": "Junho"
+        "mesReferencia": "06/2026"
       }
     ]
   }
