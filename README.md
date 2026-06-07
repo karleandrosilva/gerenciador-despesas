@@ -133,22 +133,6 @@ Para rodar os testes unitários do projeto:
 .\mvnw clean test
 ```
 
----
-
-## 📊 Modelo de Dados
-
-A entidade `Despesa` possui os seguintes atributos:
-
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `id` | `Long` | Identificador único (gerado automaticamente) |
-| `descricao` | `String` | Descrição da despesa |
-| `valor` | `BigDecimal` | Valor da despesa |
-| `categoria` | `String` | Categoria (ex: Alimentação, Transporte) |
-| `mesReferencia` | `String` | Mês da despesa (ex: "06/2026") |
-
----
-
 ## 📄 Licença
 
 MIT License
