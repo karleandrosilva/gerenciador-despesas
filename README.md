@@ -91,14 +91,14 @@ Para atualizar um registro existente, o cliente envia uma requisição `PUT` com
     "mesReferencia": "Junho"
   }
   ```
-* **Comportamento Esperado:** A API localiza o ID, atualiza todos os campos da despesa e retorna o objeto atualizado com **Status HTTP 200 (OK)**. Caso o ID não exista, retorna **Status HTTP 404 (Not Found)**.
+* **Comportamento Esperado:** A API localiza o ID, atualiza os campos da despesa e retorna o objeto atualizado com **Status HTTP 200 (OK)**. Caso o ID não exista, retorna **Status HTTP 404 (Not Found)**.
 
 ### 5. Listar Total de Despesas (Ação: READ - Agregação)
-Para visualizar o total gasto, a quantidade de despesas e a lista completa, o cliente envia uma requisição `GET` para o endpoint `/total`.
+Para visualizar o total gasto e a quantidade de despesas, o cliente envia uma requisição `GET` para o endpoint `/total`.
 
 * **Método:** `GET`
 * **URL:** `http://localhost:8080/despesas/total`
-* **Comportamento Esperado:** A API calcula a soma de todas as despesas, conta quantas existem e retorna um JSON com essas informações e a lista completa com **Status HTTP 200 (OK)**.
+* **Comportamento Esperado:** A API retorna um JSON com o total gasto, quantidade de despesas e lista completa com **Status HTTP 200 (OK)**.
   *Exemplo de retorno:*
   ```json
   {
@@ -125,42 +125,17 @@ Para visualizar o total gasto, a quantidade de despesas e a lista completa, o cl
 
 ---
 
-## 📋 Estrutura do Projeto
-
-```
-gerenciador-despesas/
-├── src/
-│   ├── main/
-│   │   ├── java/com/ufal/gerenciador_despesas/
-│   │   │   ├── GerenciadorDespesasApplication.java    (Classe principal)
-│   │   │   ├── controller/
-│   │   │   │   └── DespesaController.java            (Endpoints REST)
-│   │   │   └── model/
-│   │   │       └── Despesa.java                      (Entidade)
-│   │   └── resources/
-│   │       └── application.properties                 (Configurações)
-│   └── test/
-│       └── java/.../GerenciadorDespesasApplicationTests.java
-├── .mvn/wrapper/                                      (Maven Wrapper)
-├── mvnw / mvnw.cmd                                    (Scripts Maven)
-├── pom.xml                                            (Dependências)
-└── README.md
-```
-
----
-
-## 🧪 Executar Testes
+## 🧪 Como Executar Testes
 
 Para rodar os testes unitários do projeto:
 
-* No Windows: `.\mvnw clean test`
-* No Linux/Mac: `./mvnw clean test`
-
-A saída mostrará os testes executados e a quantidade de sucessos/falhas.
+```bash
+.\mvnw clean test
+```
 
 ---
 
-## 📊 Modelo de Dados - Entidade Despesa
+## 📊 Modelo de Dados
 
 A entidade `Despesa` possui os seguintes atributos:
 
@@ -168,99 +143,12 @@ A entidade `Despesa` possui os seguintes atributos:
 |-------|------|-----------|
 | `id` | `Long` | Identificador único (gerado automaticamente) |
 | `descricao` | `String` | Descrição da despesa |
-| `valor` | `BigDecimal` | Valor da despesa (precisão monetária) |
-| `categoria` | `String` | Categoria da despesa (ex: Alimentação, Transporte) |
-| `mesReferencia` | `String` | Mês ao qual a despesa pertence (ex: "06/2026") |
-
----
-
-## ⚠️ Tratamento de Erros
-
-A API retorna os seguintes códigos de status HTTP:
-
-| Código | Significado | Cenário |
-|--------|-------------|---------|
-| `200` | OK | Requisição bem-sucedida (GET, PUT) |
-| `201` | Created | Recurso criado com sucesso (POST) |
-| `204` | No Content | Recurso deletado com sucesso (DELETE) |
-| `404` | Not Found | Recurso não encontrado (ID inexistente) |
-| `405` | Method Not Allowed | Método HTTP não permitido para o endpoint |
-| `415` | Unsupported Media Type | Content-Type inválido (ex: text/plain em vez de application/json) |
-
----
-
-## 🔄 Fluxo de Uso Típico
-
-1. **Criar despesas** usando `POST /despesas`
-2. **Listar despesas** usando `GET /despesas`
-3. **Consultar total** usando `GET /despesas/total`
-4. **Atualizar despesaS** usando `PUT /despesas/{id}` conforme necessário
-5. **Deletar despesas** usando `DELETE /despesas/{id}` quando não forem mais necessárias
-
----
-
-## 🚀 Versão do Java Suportada
-
-* **Java 25** (LTS - Long Term Support)
-* **Java 21** (LTS - Long Term Support)
-
-A aplicação foi desenvolvida inicialmente com Java 21 e é totalmente compatível com Java 25.
-
----
-
-## 📝 Exemplo Completo com cURL
-
-```bash
-# Criar uma despesa
-curl -X POST http://localhost:8080/despesas \
-  -H "Content-Type: application/json" \
-  -d '{"descricao":"Almoço","valor":25.50,"categoria":"Alimentação","mesReferencia":"06/2026"}'
-
-# Listar todas as despesas
-curl -X GET http://localhost:8080/despesas
-
-# Ver o total gasto
-curl -X GET http://localhost:8080/despesas/total
-
-# Atualizar uma despesa (ID 1)
-curl -X PUT http://localhost:8080/despesas/1 \
-  -H "Content-Type: application/json" \
-  -d '{"descricao":"Jantar","valor":35.00,"categoria":"Alimentação","mesReferencia":"06/2026"}'
-
-# Deletar uma despesa (ID 1)
-curl -X DELETE http://localhost:8080/despesas/1
-```
-
----
-
-## 🎓 Disciplina e Instituição
-
-* **Disciplina:** Sistemas Distribuídos
-* **Instituição:** Universidade Federal de Alagoas (UFAL)
-* **Campus:** Arapiraca
-* **Curso:** Ciência da Computação
+| `valor` | `BigDecimal` | Valor da despesa |
+| `categoria` | `String` | Categoria (ex: Alimentação, Transporte) |
+| `mesReferencia` | `String` | Mês da despesa (ex: "06/2026") |
 
 ---
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
-
-## 👨‍💻 Autor
-
-**Karle Andrea da Silva**
-
----
-
-## 🎯 Melhorias Futuras
-
-* Integração com banco de dados (MySQL, PostgreSQL)
-* Autenticação e autorização (JWT)
-* Filtros avançados (por categoria, período, etc.)
-* Paginação de resultados
-* Relatórios e gráficos
-* Documentação interativa (Swagger/OpenAPI)
-* Docker para containerização
-* CI/CD com GitHub Actions
+MIT License
