@@ -47,44 +47,44 @@ public class DespesaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
 
-        // Remove da lista se o id for igual
+        // remove da lista se o id for igual
         boolean removido = despesas.removeIf(despesa -> despesa.getId().equals(id));
 
         if (removido) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Se der tudo certo (Status 204)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // se der tudo certo (Status 204)
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Se não existir a despesa, apresentará um erro (404)
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // se não existir a despesa, apresentará um erro (404)
     }
 
     // ATUALIZAR UMA DESPESA - (PUT)
     @PutMapping("/{id}")
     public ResponseEntity<Despesa> atualizar(@PathVariable Long id, @RequestBody Despesa despesaAtualizada) {
-        // Procura pela despesa com o ID informado
+        // procura pela despesa com o ID informado
         for (Despesa despesa : despesas) {
             if (despesa.getId().equals(id)) {
-                // Atualiza os campos da despesa existente
+                // atualiza os campos da despesa existente
                 despesa.setDescricao(despesaAtualizada.getDescricao());
                 despesa.setValor(despesaAtualizada.getValor());
                 despesa.setCategoria(despesaAtualizada.getCategoria());
                 despesa.setMesReferencia(despesaAtualizada.getMesReferencia());
 
-                return new ResponseEntity<>(despesa, HttpStatus.OK); // Retorna a despesa atualizada com status 200
+                return new ResponseEntity<>(despesa, HttpStatus.OK); // retorna a despesa atualizada com status 200
             }
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Se não encontrar, retorna 404
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // se não encontrar, retorna 404
     }
 
     // LISTAR TOTAL DE DESPESAS - (GET)
     @GetMapping("/total")
     public ResponseEntity<Map<String, Object>> obterTotal() {
-        // Calcula o total de todas as despesas
+        // calcula o total de todas as despesas
         BigDecimal total = despesas.stream()
                 .map(Despesa::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // Cria um mapa com o total e a quantidade de despesas
+        // cria um mapa com o total e a quantidade de despesas
         Map<String, Object> resultado = new HashMap<>();
         resultado.put("totalGasto", total);
         resultado.put("quantidadeDespesas", despesas.size());
